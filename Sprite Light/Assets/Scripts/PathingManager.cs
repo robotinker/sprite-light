@@ -23,6 +23,7 @@ public class PathingManager : MonoBehaviour
                 break;
             case PathingMode.Wander:
                 PositionAnimator.enabled = true;
+                PositionAnimator.speed = Random.Range(0.8f, 1.2f);
                 break;
         }
     }

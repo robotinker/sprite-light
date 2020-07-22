@@ -21,7 +21,7 @@ public class AddLightUI : MonoBehaviour
     public Light2D GlobalLight;
 
     public List<ParticleKVP> ParticleKVPEntries;
-    Dictionary<ParticleStyle, GameObject> ParticleRegistry = new Dictionary<ParticleStyle, GameObject>();
+    public readonly Dictionary<ParticleStyle, GameObject> ParticleRegistry = new Dictionary<ParticleStyle, GameObject>();
 
     const string AnimShowParam = "Show";
 
@@ -54,7 +54,7 @@ public class AddLightUI : MonoBehaviour
 
         FlickerToggle.onValueChanged.AddListener(x => { if (ActiveLight != null) ActiveLight.GetComponentInParent<FlickerManager>().Apply(x); });
         WanderToggle.onValueChanged.AddListener(x => { if (ActiveLight != null) ActiveLight.GetComponentInParent<PathingManager>().SetPathing(x ? PathingMode.Wander : PathingMode.Static); });
-        ParticleToggle.onValueChanged.AddListener(x => { if (ActiveLight != null) SetParticles(ActiveLight, x); });
+        ParticleToggle.onValueChanged.AddListener(x => { if (ActiveLight != null) ActiveLight.GetComponentInParent<ParticleManager>().SetParticles(x); });
     }
 
     public void SetShowing(bool val)
@@ -72,34 +72,6 @@ public class AddLightUI : MonoBehaviour
         WanderToggle.isOn = light.GetComponentInParent<PathingManager>().Mode == PathingMode.Wander;
         FlickerToggle.isOn = light.GetComponentInParent<FlickerManager>().IsFlickering;
         ParticleToggle.isOn = light.GetComponentInChildren<ParticleSystem>() != null;
-    }
-
-    void SetParticles(Light2D light, bool val)
-    {
-        if (val)
-        {
-            AddParticles(light);
-        }
-        else
-        {
-            RemoveParticles(light);
-        }
-    }
-
-    void AddParticles(Light2D light)
-    {
-        var newPS = Instantiate(ParticleRegistry[ParticleStyle.Sparkler], light.transform);
-        newPS.transform.localPosition = Vector3.zero;
-        var main = newPS.GetComponent<ParticleSystem>().main;
-        main.startColor = light.color;
-    }
-
-    void RemoveParticles(Light2D light)
-    {
-        foreach (var ps in light.GetComponentsInChildren<ParticleSystem>())
-        {
-            Destroy(ps.gameObject);
-        }
     }
 }
 

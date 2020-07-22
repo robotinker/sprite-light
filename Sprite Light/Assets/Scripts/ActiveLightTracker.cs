@@ -58,21 +58,24 @@ public class ActiveLightTracker : MonoBehaviour
         OnNoLightSelected?.Invoke();
     }
 
-    public void ConfirmLightMenuAction()
-    {
-        if (ActiveLight == null)
-        {
-            CreateLight();
-        }
-        else
-        {
-            DestroyActiveLight();
-        }
-    }
-
     public void CreateLight()
     {
+        CreateLight(null);
+    }
+
+    public void CreateLight(LightData data = null)
+    {
         var newLight = Instantiate(LightPrefab);
+
+        if (data != null)
+        {
+            var light = newLight.GetComponentInChildren<Light2D>();
+            light.color = data.Color;
+            light.intensity = data.Intensity;
+            light.GetComponentInParent<FlickerManager>().Apply(data.Flicker);
+            light.GetComponentInParent<PathingManager>().SetPathing(data.Wander ? PathingMode.Wander : PathingMode.Static);
+            light.GetComponentInParent<ParticleManager>().SetParticles(data.Particles);
+        }
 
         SetActiveLight(newLight);
         AddLightUI.Instance.UpdateUI(ActiveLight);

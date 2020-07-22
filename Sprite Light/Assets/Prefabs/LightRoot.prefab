@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 2320257792912967255}
   - component: {fileID: 6820219158077525376}
   - component: {fileID: 5399341774272952486}
+  - component: {fileID: 5398284753590949712}
   m_Layer: 0
   m_Name: LightRoot
   m_TagString: Untagged
@@ -263,3 +264,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FlickerAnimator: {fileID: 2320257791389215848}
+--- !u!114 &5398284753590949712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320257792912967254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd05d275029a10149825b24ce603142f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Light: {fileID: 2320257791590499906}

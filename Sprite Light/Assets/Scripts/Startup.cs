@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class Startup : MonoBehaviour
 {
+    [Range(0f, 1f)]
+    public float GlobalIllumination = 0.5f;
+
+    public List<LightData> StartingLights;
+
     void Start()
     {
-        ActiveLightTracker.Instance.CreateLight();
+        AddLightUI.Instance.GlobalIllumination.StealthSet(GlobalIllumination);
+
+        foreach (var lightData in StartingLights)
+        {
+            ActiveLightTracker.Instance.CreateLight(lightData);
+        }
         ActiveLightTracker.Instance.SetNoActiveLight();
     }
 }
